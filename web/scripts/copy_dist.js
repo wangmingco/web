@@ -31,4 +31,4 @@ function copyDirectory(src, dest) {
 
 // 调用函数进行复制
 copyDirectory(srcDir, destDir);
-console.log('All files and directories copied successfully!');
+console.log('All dist files and directories copied successfully!');
