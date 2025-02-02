@@ -1,8 +1,8 @@
 export function onRequest(context) {
   try {
-    return fetch('https://api.vc89.online/stock')
+    var result = fetch('https://api.vc89.online/stock')
+    return Response.json({ data: result });
   } catch(error) {
-    console.error('fetch error', error)
     var errorInfo = `Error Message: ${error.message}\nStack Trace: ${error.stack}`;
     return Response.json({ message: errorInfo });
   
