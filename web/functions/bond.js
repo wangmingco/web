@@ -3,42 +3,7 @@ export async function onRequest(context) {
     const startDateStr = startDate()
     const sql = `SELECT date as tradeDate,m3,m6,y1,y2,y3,y5,y7,y10,y30 FROM Bond where date >= '${startDateStr}' order by id limit 10000`
     const result = await context.env.DB.prepare(sql).all()
-
-    // const dataArray = convertToHeatmap(result)
-    // return Response.json(dataArray);
-
-    [
-      {
-        name: 'Email',
-        type: 'line',
-        stack: 'Total',
-        data: [120, 132, 101, 134, 90, 230, 210]
-      },
-      {
-        name: 'Union Ads',
-        type: 'line',
-        stack: 'Total',
-        data: [220, 182, 191, 234, 290, 330, 310]
-      },
-      {
-        name: 'Video Ads',
-        type: 'line',
-        stack: 'Total',
-        data: [150, 232, 201, 154, 190, 330, 410]
-      },
-      {
-        name: 'Direct',
-        type: 'line',
-        stack: 'Total',
-        data: [320, 332, 301, 334, 390, 330, 320]
-      },
-      {
-        name: 'Search Engine',
-        type: 'line',
-        stack: 'Total',
-        data: [820, 932, 901, 934, 1290, 1330, 1320]
-      }
-    ]
+    return convertToLineStack(result)
   } catch (error) {
     const errorInfo = `Error Message: ${error.message}\nStack Trace: ${error.stack}`;
     return Response.json({ message: errorInfo });
@@ -126,9 +91,9 @@ function convertToLineStack(result) {
     stack: 'Total',
     data: y30Array
   })
-  return {
+  return Response.json({
     dataArray: dataArray
-  }
+  }); 
 }
 
 function convertToHeatmap(result) {
@@ -167,10 +132,10 @@ function convertToHeatmap(result) {
     return [item[1], item[0], item[2] || '-'];
   });
 
-  return {
+  return Response.json({
     dateArray: dateArray,
     dataArray: dataArray
-  }
+  }); 
 }
 function startDate() {
   const now = new Date((new Date()).getTime() + (8 * 60 * 60 * 1000));

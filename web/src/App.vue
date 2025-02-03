@@ -46,11 +46,11 @@ export default {
   methods: {
     async initData() {
       
-      this.bondData = await this.fetchData('/bond')
       this.stockData = await this.fetchData('/stock')
       this.goldData = await this.fetchData('/gold')
       this.bitcoinData = await this.fetchData('/bitcoin')
       this.forexData = await this.fetchData('/forex')
+      this.bondData = await this.fetchData('/bond')
     },
     async fetchData(path) {
       const resp = await fetch(path)
