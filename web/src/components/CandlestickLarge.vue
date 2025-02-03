@@ -20,11 +20,12 @@ export default {
     }
   },
   mounted() {
-    this.initChart();
+    
   },
   watch: {
     data(val) {
       console.log('CandlestickLarge watch', val)
+      this.initChart();
     }
   },
   methods: {
