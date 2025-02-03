@@ -1,7 +1,7 @@
 export default async function queryKLindData(env, table) {
   try {
     const startDateStr = startDate()
-    const sql = `SELECT openPrice,closePrice,highPrice,lowPrice,tradeCount,tradeDate,changeMargin FROM ${table} where tradeDate >= '${startDateStr}' order by id desc limit 10000`
+    const sql = `SELECT openPrice,closePrice,highPrice,lowPrice,tradeCount,tradeDate,changeMargin FROM ${table} where tradeDate >= '${startDateStr}' order by id limit 10000`
     const results = await env.DB.prepare(sql).all()
     const dataList = results.results
     // 定义字段顺序
