@@ -4,6 +4,14 @@ export default async function queryKLindData(env, table) {
     const sql = `SELECT openPrice,closePrice,highPrice,lowPrice,tradeCount,tradeDate,changeMargin FROM ${table} where tradeDate >= '${startDateStr}' order by id limit 10000`
     const results = await env.DB.prepare(sql).all()
     const dataList = results.results
+    dataList.forEach(item => {
+      if (item.changeMargin > 0) {
+        item.changeMargin = 1;
+      } else if (item.changeMargin < 0) {
+        item.changeMargin = -1;
+      }
+      // 如果 changeMargin 等于 0，保持不变
+    });
     // 定义字段顺序
     const fieldOrder = ["tradeDate", "openPrice", "highPrice", "lowPrice", "closePrice", "tradeCount", "changeMargin"];
 
@@ -14,6 +22,7 @@ export default async function queryKLindData(env, table) {
         return item[field] !== undefined ? item[field] : 0;
       });
     });
+    
     return {
       status: 0,
       data: result
