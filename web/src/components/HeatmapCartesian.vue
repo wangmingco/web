@@ -8,7 +8,7 @@
 import * as echarts from 'echarts';
 
 export default {
-  name: 'EChartsComponent',
+  name: 'HeatmapCartesian',
   props: {
     title: {
       type: String,
@@ -21,6 +21,7 @@ export default {
   },
   watch: {
     data(val) {
+      console.log('HeatmapCartesian watch', val)
       this.initChart(val);
     }
   },

@@ -37,11 +37,6 @@ export default {
       bitcoinData: []
     }
   },
-  watch: {
-    stockData(val) {
-      console.log('watch', val)
-    }
-  },
   created() {
     this.initData()
   },
