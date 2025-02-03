@@ -43,9 +43,15 @@ export default {
   methods: {
     initData() {
       fetch('/stock').then(response => {
-        console.log('fetch ', response)
-        this.stockData = response.json();
+        console.log('stock resp ', response)
+        return response.json();
+      }).then(data => {
+        console.log('stock data ', data)
+        this.stockData = data;
       })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
     }
   }
 }
