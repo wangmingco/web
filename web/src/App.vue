@@ -58,7 +58,7 @@ export default {
       }).then(data => {
         this.goldData = data; // 假设你有一个 data 属性来存储数据
       }).catch(error => {
-        console.error('There was a problem with the fetch /stock operation:', error);
+        console.error('There was a problem with the fetch /gold operation:', error);
       });
 
       fetch('/bitcoin').then(response => {
@@ -66,7 +66,7 @@ export default {
       }).then(data => {
         this.bitcoinData = data; // 假设你有一个 data 属性来存储数据
       }).catch(error => {
-        console.error('There was a problem with the fetch /stock operation:', error);
+        console.error('There was a problem with the fetch /bitcoin operation:', error);
       });
 
       fetch('/forex').then(response => {
@@ -74,7 +74,7 @@ export default {
       }).then(data => {
         this.forexData = data; // 假设你有一个 data 属性来存储数据
       }).catch(error => {
-        console.error('There was a problem with the fetch /stock operation:', error);
+        console.error('There was a problem with the fetch /forex operation:', error);
       });
 
       fetch('/bond').then(response => {
@@ -82,7 +82,7 @@ export default {
       }).then(data => {
         this.bondData = data; // 假设你有一个 data 属性来存储数据
       }).catch(error => {
-        console.error('There was a problem with the fetch /stock operation:', error);
+        console.error('There was a problem with the fetch /bond operation:', error);
       });
 
     },
