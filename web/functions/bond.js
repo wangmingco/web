@@ -11,6 +11,7 @@ export async function onRequest(context) {
 }
 
 function convertToLineStack(result) {
+  const dateArray = [];
   const m3Array = [];
   const m6Array = [];
   const y1Array = [];
@@ -25,6 +26,10 @@ function convertToLineStack(result) {
   const results = result.results
   for (let i = 0; i < results.length; i++) {
     const row = results[i]
+    if (!dateArray.includes(row.tradeDate)) {
+      dateArray.push(row.tradeDate); // 将 tradeDate 添加到 dateArray
+    }
+
     m3Array.push(row.m3)
     m6Array.push(row.m6)
     y1Array.push(row.y1)
@@ -92,6 +97,7 @@ function convertToLineStack(result) {
     data: y30Array
   })
   return Response.json({
+    dateArray: dateArray,
     dataArray: dataArray
   }); 
 }
@@ -139,7 +145,7 @@ function convertToHeatmap(result) {
 }
 function startDate() {
   const now = new Date((new Date()).getTime() + (8 * 60 * 60 * 1000));
-  now.setDate(now.getDate() - 36);
+  now.setDate(now.getDate() - 365);
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const date = String(now.getDate()).padStart(2, '0');
