@@ -151,11 +151,14 @@ export default {
         value: value,
         expiry: now + 12 * 60 * 60 * 1000 // 过期时间 = 当前时间 + 过期时间（毫秒）
       };
+      
+      console.log('存储数据', key, item)
       localStorage.setItem(key, JSON.stringify(item));
     },
     getItem(key) {
       const itemStr = localStorage.getItem(key);
       if (!itemStr) {
+        console.log('没有找到数据', key)
         return null; // 没有找到数据
       }
 
@@ -163,10 +166,12 @@ export default {
       const now = new Date().getTime(); // 当前时间戳
 
       if (now > item.expiry) {
+        console.log('数据已过期，清除数据', key)
         localStorage.removeItem(key); // 如果数据已过期，清除数据
         return null; // 返回 null 或其他默认值
       }
-
+      
+      console.log('数据未过期，返回值', key, item.value)
       return item.value; // 数据未过期，返回值
     }
   }
