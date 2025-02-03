@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- 国债利率 -->
-    <!-- <HeatmapCartesian/> -->
+    <HeatmapCartesian title="国债利率" :data="bondData"/>
     
     <!-- 上证指数 -->
     <CandlestickLarge title="上证指数" :data="stockData"/>
@@ -20,13 +20,13 @@
 
 <script>
 import CandlestickLarge from './components/CandlestickLarge.vue'
-// import HeatmapCartesian from './components/HeatmapCartesian.vue'
+import HeatmapCartesian from './components/HeatmapCartesian.vue'
 
 export default {
   name: 'App',
   components: {
     CandlestickLarge,
-    // HeatmapCartesian
+    HeatmapCartesian
   },
   data() {
     return {
@@ -48,6 +48,7 @@ export default {
   methods: {
     async initData() {
       
+      this.bondData = await this.fetchData('/bond')
       this.stockData = await this.fetchData('/stock')
       this.goldData = await this.fetchData('/gold')
       this.bitcoinData = await this.fetchData('/bitcoin')

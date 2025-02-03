@@ -19,27 +19,21 @@ export default {
       required: true
     }
   },
-  mounted() {
-    
-  },
   watch: {
     data(val) {
-      console.log('CandlestickLarge watch', val)
-      this.initChart();
+      this.initChart(val);
     }
   },
   methods: {
-    initChart() {
+    initChart(val) {
       const myChart = echarts.init(this.$refs.chart);
-
-      var option;
 
       const upColor = '#ec0000';
       const upBorderColor = '#8A0000';
       const downColor = '#00da3c';
       const downBorderColor = '#008F28';
-      const data = this.data;
-      option = {
+      const data = val;
+      var option = {
         dataset: {
           source: data
         },
