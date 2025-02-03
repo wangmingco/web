@@ -25,15 +25,15 @@ function convertToLineStack(result) {
   const results = result.results
   for (let i = 0; i < results.length; i++) {
     const row = results[i]
-    m3Array.push([row.m3])
-    m6Array.push([row.m6])
-    y1Array.push([row.y1])
-    y2Array.push([row.y2])
-    y3Array.push([row.y3])
-    y5Array.push([row.y5])
-    y7Array.push([row.y7])
-    y10Array.push([row.y10])
-    y30Array.push([row.y30])
+    m3Array.push(row.m3)
+    m6Array.push(row.m6)
+    y1Array.push(row.y1)
+    y2Array.push(row.y2)
+    y3Array.push(row.y3)
+    y5Array.push(row.y5)
+    y7Array.push(row.y7)
+    y10Array.push(row.y10)
+    y30Array.push(row.y30)
   }
 
   const dataArray = []
