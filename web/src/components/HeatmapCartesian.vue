@@ -42,9 +42,7 @@ export default {
       //   .map(function (item) {
       //     return [item[1], item[0], item[2] || '-'];
       //   });
-      const data = val.dataArray.map(function (item) {
-        return [item[1], item[0], item[2] || '-'];
-      });
+      const data = val.dataArray;
       option = {
         tooltip: {
           position: 'top'

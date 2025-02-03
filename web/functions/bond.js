@@ -28,20 +28,20 @@ export async function onRequest(context) {
       y1Array.push([2, i, row.y1])
       y2Array.push([3, i, row.y2])
       y3Array.push([4, i, row.y3])
-      y5Array.push([6, i, row.y5])
-      y7Array.push([7, i, row.y7])
-      y10Array.push([8, i, row.y10])
-      y30Array.push([9, i, row.y30])
+      y5Array.push([5, i, row.y5])
+      y7Array.push([6, i, row.y7])
+      y10Array.push([7, i, row.y10])
+      y30Array.push([8, i, row.y30])
     }
 
     const combinedArray = m3Array.concat(m6Array, y1Array, y2Array, y3Array, y5Array, y7Array, y10Array, y30Array);
-    // const dataArray = combinedArray.map(function (item) {
-    //   return [item[1], item[0], item[2] || '-'];
-    // });
+    const dataArray = combinedArray.map(function (item) {
+      return [item[1], item[0], item[2] || '-'];
+    });
 
     return Response.json({
       dateArray: dateArray,
-      dataArray: combinedArray
+      dataArray: dataArray
     });
 
   } catch(error) {
@@ -52,7 +52,7 @@ export async function onRequest(context) {
 
 function startDate() {
   const now = new Date((new Date()).getTime() + (8 * 60 * 60 * 1000));
-  now.setDate(now.getDate() - 365);
+  now.setDate(now.getDate() - 36);
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const date = String(now.getDate()).padStart(2, '0');
