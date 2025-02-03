@@ -7,13 +7,13 @@
     <CandlestickLarge title="上证指数" :data="stockData"/>
 
     <!-- 黄金指数 -->
-    <!-- <CandlestickLarge/> -->
+    <CandlestickLarge title="黄金趋势" :data="goldData"/>
 
     <!-- 外汇指数 -->
-    <!-- <CandlestickLarge/> -->
+    <CandlestickLarge title="外汇趋势" :data="forexData"/>
     
     <!-- 比特币指数 -->
-    <!-- <CandlestickLarge/> -->
+    <CandlestickLarge title="比特币趋势" :data="bitcoinData"/>
 
   </div>
 </template>
@@ -32,7 +32,7 @@ export default {
     return {
       bondData: [],
       stockData: [],
-      goldkData: [],
+      goldData: [],
       forexData: [],
       bitcoinData: []
     }
@@ -48,11 +48,14 @@ export default {
   methods: {
     async initData() {
       
-      const resp = await fetch('/stock')
-      console.log(resp)
-      const data = await resp.json()
-      console.log(data)
-      this.stockData = data
+      this.stockData = await this.fetchData('/stock')
+      this.goldData = await this.fetchData('/gold')
+      this.bitcoinData = await this.fetchData('/bitcoin')
+      this.forexData = await this.fetchData('/forex')
+    },
+    async fetchData(path) {
+      const resp = await fetch(path)
+      return await resp.json()
     }
   }
 }
