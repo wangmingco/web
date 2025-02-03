@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     async initData() {
-      this.stockData = this.getItem('stockData')
+      const stockData = this.getItem('stockData')
       if (this.stockData === null || this.stockData === undefined) {
         fetch('/stock').then(response => {
           this.stockData = response.json(); // 解析 JSON 数据
@@ -70,10 +70,12 @@ export default {
         }).catch(error => {
           console.error('There was a problem with the fetch /stock operation:', error);
         });
+      } else {
+        this.stockData = stockData
       }
 
 
-      this.goldData = this.getItem('goldData')
+      const goldData = this.getItem('goldData')
       if (this.goldData === null || this.goldData === undefined) {
         fetch('/gold').then(response => {
           this.goldData = response.json(); // 解析 JSON 数据
@@ -81,10 +83,12 @@ export default {
         }).catch(error => {
           console.error('There was a problem with the fetch /gold operation:', error);
         });
+      } else {
+        this.goldData = goldData
       }
 
 
-      this.bitcoinData = this.getItem('bitcoinData')
+      const bitcoinData = this.getItem('bitcoinData')
       if (this.bitcoinData === null || this.bitcoinData === undefined) {
         fetch('/bitcoin').then(response => {
           this.bitcoinData = response.json(); // 解析 JSON 数据
@@ -92,10 +96,12 @@ export default {
         }).catch(error => {
           console.error('There was a problem with the fetch /bitcoin operation:', error);
         });
+      } else {
+        this.bitcoinData = bitcoinData
       }
 
 
-      this.forexData = this.getItem('forexData')
+      const forexData = this.getItem('forexData')
       if (this.forexData === null || this.forexData === undefined) {
         fetch('/forex').then(response => {
           this.forexData = response.json(); // 解析 JSON 数据
@@ -103,10 +109,12 @@ export default {
         }).catch(error => {
           console.error('There was a problem with the fetch /forex operation:', error);
         });
+      } else {
+        this.forexData = forexData
       }
 
 
-      this.bondData = this.getItem('bondData')
+      const bondData = this.getItem('bondData')
       if (this.bondData === null || this.bondData === undefined) {
         fetch('/bond').then(response => {
           this.bondData = response.json(); // 解析 JSON 数据
@@ -114,6 +122,8 @@ export default {
         }).catch(error => {
           console.error('There was a problem with the fetch /bond operation:', error);
         });
+      } else {
+        this.bondData = bondData
       }
 
 
@@ -151,7 +161,7 @@ export default {
         return null; // 返回 null 或其他默认值
       }
 
-      return JSON.parse(item.value); // 数据未过期，返回值
+      return item.value; // 数据未过期，返回值
     }
   }
 }
