@@ -21,6 +21,7 @@ export default {
   },
   watch: {
     data(val) {
+      console.log('CandlestickLarge watch', val)
       this.initChart(val);
     }
   },
