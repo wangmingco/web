@@ -24,7 +24,7 @@
 
       <!-- 比特币指数 -->
       <CandlestickLarge title="比特币趋势" :data="bitcoinData" />
-      
+
       <!-- 国债利率 -->
       <!-- <HeatmapCartesian title="国债利率" :data="bondData"/> -->
       <LineStack title="国债利率" :data="bondData" />
@@ -65,8 +65,10 @@ export default {
       const stockData = this.getItem('stockData')
       if (stockData === null || stockData === undefined) {
         fetch('/stock').then(response => {
-          this.stockData = response.json(); // 解析 JSON 数据
-          this.setItem('stockData', this.stockData)
+          return response.json();
+        }).then(data => {
+          this.stockData = data; // 解析 JSON 数据
+          this.setItem('stockData', data)
         }).catch(error => {
           console.error('There was a problem with the fetch /stock operation:', error);
         });
@@ -78,8 +80,10 @@ export default {
       const goldData = this.getItem('goldData')
       if (goldData === null || goldData === undefined) {
         fetch('/gold').then(response => {
-          this.goldData = response.json(); // 解析 JSON 数据
-          this.setItem('goldData', this.goldData)
+          return response.json();
+        }).then(data => {
+          this.goldData = data; // 解析 JSON 数据
+          this.setItem('goldData', data)
         }).catch(error => {
           console.error('There was a problem with the fetch /gold operation:', error);
         });
@@ -91,8 +95,10 @@ export default {
       const bitcoinData = this.getItem('bitcoinData')
       if (bitcoinData === null || bitcoinData === undefined) {
         fetch('/bitcoin').then(response => {
-          this.bitcoinData = response.json(); // 解析 JSON 数据
-          this.setItem('bitcoinData', this.bitcoinData)
+          return response.json();
+        }).then(data => {
+          this.bitcoinData = data; // 解析 JSON 数据
+          this.setItem('bitcoinData', data)
         }).catch(error => {
           console.error('There was a problem with the fetch /bitcoin operation:', error);
         });
@@ -104,8 +110,10 @@ export default {
       const forexData = this.getItem('forexData')
       if (forexData === null || forexData === undefined) {
         fetch('/forex').then(response => {
-          this.forexData = response.json(); // 解析 JSON 数据
-          this.setItem('forexData', this.forexData)
+          return response.json();
+        }).then(data => {
+          this.forexData = data; // 解析 JSON 数据
+          this.setItem('forexData', data)
         }).catch(error => {
           console.error('There was a problem with the fetch /forex operation:', error);
         });
@@ -117,8 +125,10 @@ export default {
       const bondData = this.getItem('bondData')
       if (bondData === null || bondData === undefined) {
         fetch('/bond').then(response => {
-          this.bondData = response.json(); // 解析 JSON 数据
-          this.setItem('bondData', this.bondData)
+          return response.json();
+        }).then(data => {
+          this.bondData = data; // 解析 JSON 数据
+          this.setItem('bondData', data)
         }).catch(error => {
           console.error('There was a problem with the fetch /bond operation:', error);
         });
@@ -126,12 +136,8 @@ export default {
         this.bondData = bondData
       }
 
+    },
 
-    },
-    async fetchData(path) {
-      const resp = await fetch(path)
-      return await resp.json()
-    },
     clearItems() {
       localStorage.removeItem('stockData');
       localStorage.removeItem('goldData');
@@ -187,5 +193,4 @@ export default {
   display: flex;
   flex-direction: row;
 }
-
 </style>
