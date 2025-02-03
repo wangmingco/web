@@ -1,55 +1,177 @@
 export async function onRequest(context) {
-  try{
+  try {
     const startDateStr = startDate()
     const sql = `SELECT date as tradeDate,m3,m6,y1,y2,y3,y5,y7,y10,y30 FROM Bond where date >= '${startDateStr}' order by id limit 10000`
     const result = await context.env.DB.prepare(sql).all()
 
-     // 初始化 dateArray 和 dataArray
-     const dateArray = [];
-     const m3Array = [];
-     const m6Array = [];
-     const y1Array = [];
-     const y2Array = [];
-     const y3Array = [];
-     const y5Array = [];
-     const y7Array = [];
-     const y10Array = [];
-     const y30Array = [];
+    // const dataArray = convertToHeatmap(result)
+    // return Response.json(dataArray);
 
-     // 遍历每一行数据
-     const results = result.results
-     for (let i = 0; i < results.length; i++) {
-      const row = results[i]
-      if (!dateArray.includes(row.tradeDate)) {
-        dateArray.push(row.tradeDate); // 将 tradeDate 添加到 dateArray
+    [
+      {
+        name: 'Email',
+        type: 'line',
+        stack: 'Total',
+        data: [120, 132, 101, 134, 90, 230, 210]
+      },
+      {
+        name: 'Union Ads',
+        type: 'line',
+        stack: 'Total',
+        data: [220, 182, 191, 234, 290, 330, 310]
+      },
+      {
+        name: 'Video Ads',
+        type: 'line',
+        stack: 'Total',
+        data: [150, 232, 201, 154, 190, 330, 410]
+      },
+      {
+        name: 'Direct',
+        type: 'line',
+        stack: 'Total',
+        data: [320, 332, 301, 334, 390, 330, 320]
+      },
+      {
+        name: 'Search Engine',
+        type: 'line',
+        stack: 'Total',
+        data: [820, 932, 901, 934, 1290, 1330, 1320]
       }
-      m3Array.push([0, i, row.m3])
-      m6Array.push([1, i, row.m6])
-      y1Array.push([2, i, row.y1])
-      y2Array.push([3, i, row.y2])
-      y3Array.push([4, i, row.y3])
-      y5Array.push([5, i, row.y5])
-      y7Array.push([6, i, row.y7])
-      y10Array.push([7, i, row.y10])
-      y30Array.push([8, i, row.y30])
-    }
-
-    const combinedArray = m3Array.concat(m6Array, y1Array, y2Array, y3Array, y5Array, y7Array, y10Array, y30Array);
-    const dataArray = combinedArray.map(function (item) {
-      return [item[1], item[0], item[2] || '-'];
-    });
-
-    return Response.json({
-      dateArray: dateArray,
-      dataArray: dataArray
-    });
-
-  } catch(error) {
+    ]
+  } catch (error) {
     const errorInfo = `Error Message: ${error.message}\nStack Trace: ${error.stack}`;
-    return Response.json({message: errorInfo});
+    return Response.json({ message: errorInfo });
   }
 }
 
+function convertToLineStack(result) {
+  const m3Array = [];
+  const m6Array = [];
+  const y1Array = [];
+  const y2Array = [];
+  const y3Array = [];
+  const y5Array = [];
+  const y7Array = [];
+  const y10Array = [];
+  const y30Array = [];
+
+  // 遍历每一行数据
+  const results = result.results
+  for (let i = 0; i < results.length; i++) {
+    const row = results[i]
+    m3Array.push([row.m3])
+    m6Array.push([row.m6])
+    y1Array.push([row.y1])
+    y2Array.push([row.y2])
+    y3Array.push([row.y3])
+    y5Array.push([row.y5])
+    y7Array.push([row.y7])
+    y10Array.push([row.y10])
+    y30Array.push([row.y30])
+  }
+
+  const dataArray = []
+  dataArray.push({
+    name: 'm3',
+    type: 'line',
+    stack: 'Total',
+    data: m3Array
+  })
+  dataArray.push({
+    name: 'm6',
+    type: 'line',
+    stack: 'Total',
+    data: m6Array
+  })
+  dataArray.push({
+    name: 'y1',
+    type: 'line',
+    stack: 'Total',
+    data: y1Array
+  })
+  dataArray.push({
+    name: 'y2',
+    type: 'line',
+    stack: 'Total',
+    data: y2Array
+  })
+  dataArray.push({
+    name: 'y3',
+    type: 'line',
+    stack: 'Total',
+    data: y3Array
+  })
+  dataArray.push({
+    name: 'y5',
+    type: 'line',
+    stack: 'Total',
+    data: y5Array
+  })
+  dataArray.push({
+    name: 'y7',
+    type: 'line',
+    stack: 'Total',
+    data: y7Array
+  })
+  dataArray.push({
+    name: 'y10',
+    type: 'line',
+    stack: 'Total',
+    data: y10Array
+  })
+  dataArray.push({
+    name: 'y30',
+    type: 'line',
+    stack: 'Total',
+    data: y30Array
+  })
+  return {
+    dataArray: dataArray
+  }
+}
+
+function convertToHeatmap(result) {
+  const dateArray = [];
+
+  const m3Array = [];
+  const m6Array = [];
+  const y1Array = [];
+  const y2Array = [];
+  const y3Array = [];
+  const y5Array = [];
+  const y7Array = [];
+  const y10Array = [];
+  const y30Array = [];
+
+  // 遍历每一行数据
+  const results = result.results
+  for (let i = 0; i < results.length; i++) {
+    const row = results[i]
+    if (!dateArray.includes(row.tradeDate)) {
+      dateArray.push(row.tradeDate); // 将 tradeDate 添加到 dateArray
+    }
+    m3Array.push([0, i, row.m3])
+    m6Array.push([1, i, row.m6])
+    y1Array.push([2, i, row.y1])
+    y2Array.push([3, i, row.y2])
+    y3Array.push([4, i, row.y3])
+    y5Array.push([5, i, row.y5])
+    y7Array.push([6, i, row.y7])
+    y10Array.push([7, i, row.y10])
+    y30Array.push([8, i, row.y30])
+  }
+
+  const combinedArray = m3Array.concat(m6Array, y1Array, y2Array, y3Array, y5Array, y7Array, y10Array, y30Array);
+  const dataArray = combinedArray.map(function (item) {
+    return [item[1], item[0], item[2] || '-'];
+  });
+
+  return {
+    dateArray: dateArray,
+    dataArray: dataArray
+  }
+}
 function startDate() {
   const now = new Date((new Date()).getTime() + (8 * 60 * 60 * 1000));
   now.setDate(now.getDate() - 36);

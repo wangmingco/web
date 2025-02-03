@@ -47,6 +47,9 @@ export default {
         tooltip: {
           position: 'top'
         },
+        title: {
+          text: this.title
+        },
         grid: {
           height: '50%',
           top: '10%'
