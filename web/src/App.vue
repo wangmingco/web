@@ -45,12 +45,46 @@ export default {
   },
   methods: {
     async initData() {
-      
-      this.stockData = await this.fetchData('/stock')
-      this.goldData = await this.fetchData('/gold')
-      this.bitcoinData = await this.fetchData('/bitcoin')
-      this.forexData = await this.fetchData('/forex')
-      this.bondData = await this.fetchData('/bond')
+      fetch('/stock').then(response => {
+        return response.json(); // 解析 JSON 数据
+      }).then(data => {
+        this.stockData = data; // 假设你有一个 data 属性来存储数据
+      }).catch(error => {
+        console.error('There was a problem with the fetch /stock operation:', error);
+      });
+
+      fetch('/gold').then(response => {
+        return response.json(); // 解析 JSON 数据
+      }).then(data => {
+        this.goldData = data; // 假设你有一个 data 属性来存储数据
+      }).catch(error => {
+        console.error('There was a problem with the fetch /stock operation:', error);
+      });
+
+      fetch('/bitcoin').then(response => {
+        return response.json(); // 解析 JSON 数据
+      }).then(data => {
+        this.bitcoinData = data; // 假设你有一个 data 属性来存储数据
+      }).catch(error => {
+        console.error('There was a problem with the fetch /stock operation:', error);
+      });
+
+      fetch('/forex').then(response => {
+        return response.json(); // 解析 JSON 数据
+      }).then(data => {
+        this.forexData = data; // 假设你有一个 data 属性来存储数据
+      }).catch(error => {
+        console.error('There was a problem with the fetch /stock operation:', error);
+      });
+
+      fetch('/bond').then(response => {
+        return response.json(); // 解析 JSON 数据
+      }).then(data => {
+        this.bondData = data; // 假设你有一个 data 属性来存储数据
+      }).catch(error => {
+        console.error('There was a problem with the fetch /stock operation:', error);
+      });
+
     },
     async fetchData(path) {
       const resp = await fetch(path)
