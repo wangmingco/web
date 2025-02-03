@@ -57,7 +57,7 @@ export default {
       bitcoinData: []
     }
   },
-  created() {
+  mounted() {
     this.initData()
   },
   methods: {
