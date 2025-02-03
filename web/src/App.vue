@@ -63,7 +63,7 @@ export default {
   methods: {
     async initData() {
       const stockData = this.getItem('stockData')
-      if (this.stockData === null || this.stockData === undefined) {
+      if (stockData === null || stockData === undefined) {
         fetch('/stock').then(response => {
           this.stockData = response.json(); // 解析 JSON 数据
           this.setItem('stockData', this.stockData)
@@ -76,7 +76,7 @@ export default {
 
 
       const goldData = this.getItem('goldData')
-      if (this.goldData === null || this.goldData === undefined) {
+      if (goldData === null || goldData === undefined) {
         fetch('/gold').then(response => {
           this.goldData = response.json(); // 解析 JSON 数据
           this.setItem('goldData', this.goldData)
@@ -89,7 +89,7 @@ export default {
 
 
       const bitcoinData = this.getItem('bitcoinData')
-      if (this.bitcoinData === null || this.bitcoinData === undefined) {
+      if (bitcoinData === null || bitcoinData === undefined) {
         fetch('/bitcoin').then(response => {
           this.bitcoinData = response.json(); // 解析 JSON 数据
           this.setItem('bitcoinData', this.bitcoinData)
@@ -102,7 +102,7 @@ export default {
 
 
       const forexData = this.getItem('forexData')
-      if (this.forexData === null || this.forexData === undefined) {
+      if (forexData === null || forexData === undefined) {
         fetch('/forex').then(response => {
           this.forexData = response.json(); // 解析 JSON 数据
           this.setItem('forexData', this.forexData)
@@ -115,7 +115,7 @@ export default {
 
 
       const bondData = this.getItem('bondData')
-      if (this.bondData === null || this.bondData === undefined) {
+      if (bondData === null || bondData === undefined) {
         fetch('/bond').then(response => {
           this.bondData = response.json(); // 解析 JSON 数据
           this.setItem('bondData', this.bondData)
