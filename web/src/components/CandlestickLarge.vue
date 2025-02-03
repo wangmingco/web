@@ -22,6 +22,11 @@ export default {
   mounted() {
     this.initChart();
   },
+  watch: {
+    data(val) {
+      console.log('CandlestickLarge watch', val)
+    }
+  },
   methods: {
     initChart() {
       const myChart = echarts.init(this.$refs.chart);
