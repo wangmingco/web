@@ -28,7 +28,7 @@
       <!-- 国债利率 -->
       <!-- <HeatmapCartesian title="国债利率" :data="bondData"/> -->
       <LineStack title="国债利率" :data="bondData" />
-      
+
     </div>
 
 
@@ -151,7 +151,7 @@ export default {
         return null; // 返回 null 或其他默认值
       }
 
-      return item.value; // 数据未过期，返回值
+      return JSON.parse(item.value); // 数据未过期，返回值
     }
   }
 }
