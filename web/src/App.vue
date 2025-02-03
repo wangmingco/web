@@ -2,19 +2,19 @@
   <div id="app">
     <!-- 国债利率 -->
     <!-- <HeatmapCartesian title="国债利率" :data="bondData"/> -->
-    <LineStack title="国债利率" :data="bondData"/>
-    
+    <LineStack title="国债利率" :data="bondData" />
+
     <!-- 上证指数 -->
-    <CandlestickLarge title="上证指数" :data="stockData"/>
+    <CandlestickLarge title="上证指数" :data="stockData" />
 
     <!-- 黄金指数 -->
-    <CandlestickLarge title="黄金趋势" :data="goldData"/>
+    <CandlestickLarge title="黄金趋势" :data="goldData" />
 
     <!-- 外汇指数 -->
-    <CandlestickLarge title="外汇趋势" :data="forexData"/>
-    
+    <CandlestickLarge title="外汇趋势" :data="forexData" />
+
     <!-- 比特币指数 -->
-    <CandlestickLarge title="比特币趋势" :data="bitcoinData"/>
+    <CandlestickLarge title="比特币趋势" :data="bitcoinData" />
 
   </div>
 </template>
@@ -45,50 +45,89 @@ export default {
   },
   methods: {
     async initData() {
-      fetch('/stock').then(response => {
-        return response.json(); // 解析 JSON 数据
-      }).then(data => {
-        this.stockData = data; // 假设你有一个 data 属性来存储数据
-      }).catch(error => {
-        console.error('There was a problem with the fetch /stock operation:', error);
-      });
+      this.stockData = this.getItem('stockData')
+      if (this.stockData === null || this.stockData === undefined) {
+        fetch('/stock').then(response => {
+          this.stockData = response.json(); // 解析 JSON 数据
+          this.setItem('stockData', this.stockData)
+        }).catch(error => {
+          console.error('There was a problem with the fetch /stock operation:', error);
+        });
+      }
 
-      fetch('/gold').then(response => {
-        return response.json(); // 解析 JSON 数据
-      }).then(data => {
-        this.goldData = data; // 假设你有一个 data 属性来存储数据
-      }).catch(error => {
-        console.error('There was a problem with the fetch /gold operation:', error);
-      });
 
-      fetch('/bitcoin').then(response => {
-        return response.json(); // 解析 JSON 数据
-      }).then(data => {
-        this.bitcoinData = data; // 假设你有一个 data 属性来存储数据
-      }).catch(error => {
-        console.error('There was a problem with the fetch /bitcoin operation:', error);
-      });
+      this.goldData = this.getItem('goldData')
+      if (this.goldData === null || this.goldData === undefined) {
+        fetch('/gold').then(response => {
+          this.goldData = response.json(); // 解析 JSON 数据
+          this.setItem('goldData', this.goldData)
+        }).catch(error => {
+          console.error('There was a problem with the fetch /gold operation:', error);
+        });
+      }
 
-      fetch('/forex').then(response => {
-        return response.json(); // 解析 JSON 数据
-      }).then(data => {
-        this.forexData = data; // 假设你有一个 data 属性来存储数据
-      }).catch(error => {
-        console.error('There was a problem with the fetch /forex operation:', error);
-      });
 
-      fetch('/bond').then(response => {
-        return response.json(); // 解析 JSON 数据
-      }).then(data => {
-        this.bondData = data; // 假设你有一个 data 属性来存储数据
-      }).catch(error => {
-        console.error('There was a problem with the fetch /bond operation:', error);
-      });
+      this.bitcoinData = this.getItem('bitcoinData')
+      if (this.bitcoinData === null || this.bitcoinData === undefined) {
+        fetch('/bitcoin').then(response => {
+          this.bitcoinData = response.json(); // 解析 JSON 数据
+          this.setItem('bitcoinData', this.bitcoinData)
+        }).catch(error => {
+          console.error('There was a problem with the fetch /bitcoin operation:', error);
+        });
+      }
+
+
+      this.forexData = this.getItem('forexData')
+      if (this.forexData === null || this.forexData === undefined) {
+        fetch('/forex').then(response => {
+          this.forexData = response.json(); // 解析 JSON 数据
+          this.setItem('forexData', this.forexData)
+        }).catch(error => {
+          console.error('There was a problem with the fetch /forex operation:', error);
+        });
+      }
+
+
+      this.bondData = this.getItem('bondData')
+      if (this.bondData === null || this.bondData === undefined) {
+        fetch('/bond').then(response => {
+          this.bondData = response.json(); // 解析 JSON 数据
+          this.setItem('bondData', this.bondData)
+        }).catch(error => {
+          console.error('There was a problem with the fetch /bond operation:', error);
+        });
+      }
+
 
     },
     async fetchData(path) {
       const resp = await fetch(path)
       return await resp.json()
+    },
+    setItem(key, value) {
+      const now = new Date().getTime(); // 当前时间戳
+      const item = {
+        value: value,
+        expiry: now + 12 * 60 * 60 * 1000 // 过期时间 = 当前时间 + 过期时间（毫秒）
+      };
+      localStorage.setItem(key, JSON.stringify(item));
+    },
+    getItem(key) {
+      const itemStr = localStorage.getItem(key);
+      if (!itemStr) {
+        return null; // 没有找到数据
+      }
+
+      const item = JSON.parse(itemStr);
+      const now = new Date().getTime(); // 当前时间戳
+
+      if (now > item.expiry) {
+        localStorage.removeItem(key); // 如果数据已过期，清除数据
+        return null; // 返回 null 或其他默认值
+      }
+
+      return item.value; // 数据未过期，返回值
     }
   }
 }
