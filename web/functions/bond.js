@@ -145,7 +145,7 @@ function convertToHeatmap(result) {
 }
 function startDate() {
   const now = new Date((new Date()).getTime() + (8 * 60 * 60 * 1000));
-  now.setDate(now.getDate() - 365);
+  now.setDate(now.getDate() - 1800);
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const date = String(now.getDate()).padStart(2, '0');
