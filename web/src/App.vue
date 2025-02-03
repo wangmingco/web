@@ -37,21 +37,22 @@ export default {
       bitcoinData: []
     }
   },
+  watch: {
+    stockData(val) {
+      console.log('watch', val)
+    }
+  },
   created() {
     this.initData()
   },
   methods: {
-    initData() {
-      fetch('/stock').then(response => {
-        console.log('stock resp ', response)
-        return response.json();
-      }).then(data => {
-        console.log('stock data ', data)
-        this.stockData = data;
-      })
-      .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-      });
+    async initData() {
+      
+      const resp = await fetch('/stock')
+      console.log(resp)
+      const data = await resp.json()
+      console.log(data)
+      this.stockData = data
     }
   }
 }
