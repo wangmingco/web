@@ -1,20 +1,36 @@
 <template>
   <div id="app">
-    <!-- 国债利率 -->
-    <!-- <HeatmapCartesian title="国债利率" :data="bondData"/> -->
-    <LineStack title="国债利率" :data="bondData" />
+    <div class="titleContainer">
+      <div class="conditionContainer">
+        <el-radio v-model="radio" label="1">一年</el-radio>
+        <el-radio v-model="radio" label="5">五年</el-radio>
+        <el-radio v-model="radio" label="10">十年</el-radio>
+      </div>
+      <div>
+        <el-button type="info" plain @click="clearItems" size="mini">清除缓存</el-button>
+      </div>
+    </div>
 
-    <!-- 上证指数 -->
-    <CandlestickLarge title="上证指数" :data="stockData" />
+    <div>
 
-    <!-- 黄金指数 -->
-    <CandlestickLarge title="黄金趋势" :data="goldData" />
+      <!-- 上证指数 -->
+      <CandlestickLarge title="上证指数" :data="stockData" />
 
-    <!-- 外汇指数 -->
-    <CandlestickLarge title="外汇趋势" :data="forexData" />
+      <!-- 黄金指数 -->
+      <CandlestickLarge title="黄金趋势" :data="goldData" />
 
-    <!-- 比特币指数 -->
-    <CandlestickLarge title="比特币趋势" :data="bitcoinData" />
+      <!-- 外汇指数 -->
+      <CandlestickLarge title="外汇趋势" :data="forexData" />
+
+      <!-- 比特币指数 -->
+      <CandlestickLarge title="比特币趋势" :data="bitcoinData" />
+      
+      <!-- 国债利率 -->
+      <!-- <HeatmapCartesian title="国债利率" :data="bondData"/> -->
+      <LineStack title="国债利率" :data="bondData" />
+      
+    </div>
+
 
   </div>
 </template>
@@ -33,6 +49,7 @@ export default {
   },
   data() {
     return {
+      radio: 5,
       bondData: [],
       stockData: [],
       goldData: [],
@@ -105,6 +122,13 @@ export default {
       const resp = await fetch(path)
       return await resp.json()
     },
+    clearItems() {
+      localStorage.removeItem('stockData');
+      localStorage.removeItem('goldData');
+      localStorage.removeItem('bitcoinData');
+      localStorage.removeItem('forexData');
+      localStorage.removeItem('bondData');
+    },
     setItem(key, value) {
       const now = new Date().getTime(); // 当前时间戳
       const item = {
@@ -142,4 +166,16 @@ export default {
   color: #2c3e50;
   margin-top: 10px;
 }
+
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.conditionContainer {
+  display: flex;
+  flex-direction: row;
+}
+
 </style>
