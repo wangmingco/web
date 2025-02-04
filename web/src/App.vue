@@ -61,7 +61,7 @@ export default {
     this.initData()
   },
   methods: {
-    async initData() {
+    initData() {
       const stockData = this.getItem('stockData')
       if (stockData === null || stockData === undefined) {
         fetch('/stock').then(response => {
@@ -171,7 +171,6 @@ export default {
         return null; // 返回 null 或其他默认值
       }
       
-      console.log('数据未过期，返回值', key, item.value)
       return item.value; // 数据未过期，返回值
     }
   }
