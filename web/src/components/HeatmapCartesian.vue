@@ -42,13 +42,14 @@ export default {
       //   .map(function (item) {
       //     return [item[1], item[0], item[2] || '-'];
       //   });
+      const title = this.title + " " + val.dateArray[val.dateArray.length - 1]
       const data = val.dataArray;
       option = {
         tooltip: {
           position: 'top'
         },
         title: {
-          text: this.title
+          text: title
         },
         grid: {
           height: '50%',

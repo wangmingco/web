@@ -27,10 +27,10 @@ export default {
   methods: {
     initChart(val) {
       const myChart = echarts.init(this.$refs.chart);
-
+      const title = this.title + " " + val.dateArray[val.dateArray.length - 1]
       var option = {
         title: {
-          text: this.title
+          text: title
         },
         tooltip: {
           trigger: 'axis'
