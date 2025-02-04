@@ -6,3 +6,9 @@ const cnameContent = 'www.vc89.online';
 
 const cnamePath = path.resolve(__dirname, '../dist/CNAME');
 fs.writeFileSync(cnamePath, cnameContent);
+
+const cnamePath1 = path.resolve(__dirname, '../CNAME');
+fs.writeFileSync(cnamePath1, cnameContent);
+
+const cnamePath2 = path.resolve(__dirname, './CNAME');
+fs.writeFileSync(cnamePath2, cnameContent);
