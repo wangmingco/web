@@ -33,12 +33,13 @@ export default {
       const downColor = '#00da3c';
       const downBorderColor = '#008F28';
       const data = val;
+      const title = this.title + " " + val[val.length - 1][0]
       var option = {
         dataset: {
           source: data
         },
         title: {
-          text: this.title
+          text: title
         },
         tooltip: {
           trigger: 'axis',

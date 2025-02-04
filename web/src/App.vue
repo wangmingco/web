@@ -13,21 +13,31 @@
 
     <div>
 
-      <!-- 上证指数 -->
-      <CandlestickLarge title="上证指数" :data="stockData" />
+      <div style="margin-bottom: 10px;">
+        <!-- 上证指数 -->
+        <CandlestickLarge title="上证指数" :data="stockData" />
+      </div>
 
-      <!-- 黄金指数 -->
-      <CandlestickLarge title="黄金趋势" :data="goldData" />
+      <div style="margin-bottom: 10px;">
+        <!-- 黄金指数 -->
+        <CandlestickLarge title="黄金趋势" :data="goldData" />
+      </div>
 
-      <!-- 外汇指数 -->
-      <CandlestickLarge title="外汇趋势" :data="forexData" />
+      <div style="margin-bottom: 10px;">
+        <!-- 外汇指数 -->
+        <CandlestickLarge title="外汇趋势" :data="forexData" />
+      </div>
 
-      <!-- 比特币指数 -->
-      <CandlestickLarge title="比特币趋势" :data="bitcoinData" />
+      <div style="margin-bottom: 10px;">
+        <!-- 比特币指数 -->
+        <CandlestickLarge title="比特币趋势" :data="bitcoinData" />
+      </div>
 
-      <!-- 国债利率 -->
-      <!-- <HeatmapCartesian title="国债利率" :data="bondData"/> -->
-      <LineStack title="国债利率" :data="bondData" />
+      <div style="margin-bottom: 10px;">
+        <!-- 国债利率 -->
+        <!-- <HeatmapCartesian title="国债利率" :data="bondData"/> -->
+        <LineStack title="国债利率" :data="bondData" />
+      </div>
 
     </div>
 
@@ -151,7 +161,7 @@ export default {
         value: value,
         expiry: now + 12 * 60 * 60 * 1000 // 过期时间 = 当前时间 + 过期时间（毫秒）
       };
-      
+
       console.log('存储数据', key, item)
       localStorage.setItem(key, JSON.stringify(item));
     },
@@ -170,7 +180,7 @@ export default {
         localStorage.removeItem(key); // 如果数据已过期，清除数据
         return null; // 返回 null 或其他默认值
       }
-      
+
       return item.value; // 数据未过期，返回值
     }
   }
