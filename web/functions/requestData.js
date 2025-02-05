@@ -7,7 +7,13 @@ export async function onRequest(context) {
         const year = parseInt(req.year);
 
         if (year !== 1 || year !== 5 || year !== 10) {
-            return Response.json({context});
+            return Response.json({
+                context: context,
+                year: year,
+                request: JSON.stringify(context.request), 
+                params: JSON.stringify(context.params), 
+                data: JSON.stringify(context.data) 
+            });
         }
 
         const tableName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
@@ -17,7 +23,14 @@ export async function onRequest(context) {
         }
         return Response.json(data);
     } catch (error) {
-        return Response.json(context);
+        const errorInfo = `Error Message: ${error.message}\nStack Trace: ${error.stack}`;
+        return Response.json({
+            context: context,
+            errorInfo: errorInfo,
+            request: JSON.stringify(context.request), 
+            params: JSON.stringify(context.params), 
+            data: JSON.stringify(context.data) 
+        });
     }
 }
 
