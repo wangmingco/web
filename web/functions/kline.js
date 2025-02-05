@@ -1,6 +1,6 @@
-export default async function queryKLindData(env, table) {
+export default async function queryKLindData(env, table, year) {
   try {
-    const startDateStr = startDate()
+    const startDateStr = startDate(year)
     const sql = `SELECT openPrice,closePrice,highPrice,lowPrice,tradeCount,tradeDate,changeMargin FROM ${table} where tradeDate >= '${startDateStr}' order by id limit 10000`
     const results = await env.DB.prepare(sql).all()
     const dataList = results.results
@@ -33,9 +33,9 @@ export default async function queryKLindData(env, table) {
   }
 }
 
-function startDate() {
+function startDate(years) {
   const now = new Date((new Date()).getTime() + (8 * 60 * 60 * 1000));
-  now.setDate(now.getDate() - 1800);
+  now.setDate(now.getDate() - 365 * years);
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, '0');
   const date = String(now.getDate()).padStart(2, '0');
