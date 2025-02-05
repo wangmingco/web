@@ -78,15 +78,15 @@ export default {
   },
   methods: {
     initData() {
-      const stockData = this.getItem('stockData')
+      const stockData = this.getItem('stockData-'+ this.year)
       if (stockData === null || stockData === undefined) {
         fetch('/requestData/stock/' + this.year).then(response => {
           return response.json();
         }).then(data => {
           this.stockData = data; // 解析 JSON 数据
-          this.setItem('stockData', data)
+          this.setItem('stockData-'+ this.year, data)
         }).catch(error => {
-          console.error('There was a problem with the fetch /stock operation:', error);
+          console.error('There was a problem with the fetch /stock operation:', this.year, error);
           this.stockData = null
         });
       } else {
@@ -94,15 +94,15 @@ export default {
       }
 
 
-      const goldData = this.getItem('goldData')
+      const goldData = this.getItem('goldData-'+ this.year)
       if (goldData === null || goldData === undefined) {
         fetch('/requestData/gold/' + this.year).then(response => {
           return response.json();
         }).then(data => {
           this.goldData = data; // 解析 JSON 数据
-          this.setItem('goldData', data)
+          this.setItem('goldData-'+ this.year, data)
         }).catch(error => {
-          console.error('There was a problem with the fetch /gold operation:', error);
+          console.error('There was a problem with the fetch /gold operation:', this.year, error);
           this.goldData = null
         });
       } else {
@@ -110,15 +110,15 @@ export default {
       }
 
 
-      const bitcoinData = this.getItem('bitcoinData')
+      const bitcoinData = this.getItem('bitcoinData-'+ this.year)
       if (bitcoinData === null || bitcoinData === undefined) {
         fetch('/requestData/bitcoin/' + this.year).then(response => {
           return response.json();
         }).then(data => {
           this.bitcoinData = data; // 解析 JSON 数据
-          this.setItem('bitcoinData', data)
+          this.setItem('bitcoinData-'+ this.year, data)
         }).catch(error => {
-          console.error('There was a problem with the fetch /bitcoin operation:', error);
+          console.error('There was a problem with the fetch /bitcoin operation:', this.year, error);
           this.bitcoinData = null
         });
       } else {
@@ -126,15 +126,15 @@ export default {
       }
 
 
-      const forexData = this.getItem('forexData')
+      const forexData = this.getItem('forexData-'+ this.year)
       if (forexData === null || forexData === undefined) {
         fetch('/requestData/forex/' + this.year).then(response => {
           return response.json();
         }).then(data => {
           this.forexData = data; // 解析 JSON 数据
-          this.setItem('forexData', data)
+          this.setItem('forexData-'+ this.year, data)
         }).catch(error => {
-          console.error('There was a problem with the fetch /forex operation:', error);
+          console.error('There was a problem with the fetch /forex operation:', this.year, error);
           this.forexData = null
         });
       } else {
@@ -142,15 +142,15 @@ export default {
       }
 
 
-      const bondData = this.getItem('bondData')
+      const bondData = this.getItem('bondData-'+ this.year)
       if (bondData === null || bondData === undefined) {
         fetch('/requestData/bond/' + this.year).then(response => {
           return response.json();
         }).then(data => {
           this.bondData = data; // 解析 JSON 数据
-          this.setItem('bondData', data)
+          this.setItem('bondData-'+ this.year, data)
         }).catch(error => {
-          console.error('There was a problem with the fetch /bond operation:', error);
+          console.error('There was a problem with the fetch /bond operation:', this.year, error);
           this.bondData = null
         });
       } else {
@@ -160,11 +160,24 @@ export default {
     },
 
     clearItems() {
-      localStorage.removeItem('stockData');
-      localStorage.removeItem('goldData');
-      localStorage.removeItem('bitcoinData');
-      localStorage.removeItem('forexData');
-      localStorage.removeItem('bondData');
+      localStorage.removeItem('stockData-1');
+      localStorage.removeItem('goldData-1');
+      localStorage.removeItem('bitcoinData-1');
+      localStorage.removeItem('forexData-1');
+      localStorage.removeItem('bondData-1');
+      
+      localStorage.removeItem('stockData-5');
+      localStorage.removeItem('goldData-5');
+      localStorage.removeItem('bitcoinData-5');
+      localStorage.removeItem('forexData-5');
+      localStorage.removeItem('bondData-5');
+
+      
+      localStorage.removeItem('stockData-10');
+      localStorage.removeItem('goldData-10');
+      localStorage.removeItem('bitcoinData-10');
+      localStorage.removeItem('forexData-10');
+      localStorage.removeItem('bondData-10');
     },
     setItem(key, value) {
       const now = new Date().getTime(); // 当前时间戳
