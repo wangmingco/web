@@ -23,7 +23,7 @@ export default {
     data(val) {
       console.log('CandlestickLarge', val)
       if (val == null) {
-        const data = this.generateOHLC(2e5)
+        const data = this.generateOHLC(3560)
         this.initChart(data);
       } else {
         this.initChart(val);
