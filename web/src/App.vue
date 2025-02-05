@@ -98,13 +98,7 @@ export default {
       }
       const item = this.getItem(type + '-' + this.year)
       if (item === null || item === undefined) {
-        fetch('/requestData/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(req)
-        }).then(response => {
+        fetch('/requestData/'+ type + '/' + this.year).then(response => {
           if (!response.ok) {
             this.setData(type, this.mockData)
             return null

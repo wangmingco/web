@@ -28,6 +28,7 @@ export default async function queryKLindData(env, table, year) {
       data: result
     };
   } catch(error) {
+    console.log('kline', error)
     const errorInfo = `Error Message: ${error.message}\nStack Trace: ${error.stack}`;
     return {status: 1, data: errorInfo};
   }

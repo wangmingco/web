@@ -1,14 +1,14 @@
-import queryKLindData from "./kline";
+import queryKLindData from "../../kline";
 export async function onRequest(context) {
 
     try {
-        const req = await context.request.json();
-        const name = req.type;
-        const year = parseInt(req.year);
+        const env = context.env
+        const name = context.params['type'][0];
+        const year = parseInt(context.params['type'][1]);
 
-        if (year !== 1 || year !== 5 || year !== 10) {
+        if (year !== 1 && year !== 5 && year !== 10) {
             return Response.json({
-                context: context,
+                name: name,
                 year: year,
                 request: JSON.stringify(context.request), 
                 params: JSON.stringify(context.params), 
@@ -19,10 +19,11 @@ export async function onRequest(context) {
         const tableName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
         const data = await env.FinanceCache.get(tableName + '-' + year)
         if (data === null || data === undefined) {
-            return await queryFromDB(context, tableName, year)
+            return await queryFromDB(env, tableName, year)
         }
         return Response.json(data);
     } catch (error) {
+        console.log('requestData error', error)
         const errorInfo = `Error Message: ${error.message}\nStack Trace: ${error.stack}`;
         return Response.json({
             context: context,
@@ -59,6 +60,7 @@ async function queryBondData(env, tableName, year) {
         const result = await env.DB.prepare(sql).all()
         return convertToLineStack(result)
     } catch (error) {
+        console.log('queryBondData error', error)
         const errorInfo = `Error Message: ${error.message}\nStack Trace: ${error.stack}`;
         return Response.json({ message: errorInfo });
     }

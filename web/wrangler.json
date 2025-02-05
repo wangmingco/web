@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "finance-functions",
+  "compatibility_date": "2025-01-24",
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "finance",
+      "database_id": "fd1b2cd4-9aa9-469d-b05c-aaab01b9195d"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "FinanceCache",
+      "id": "134f0bcf9da448f4b0a0146f02621072"
+    }
+  ]
+}

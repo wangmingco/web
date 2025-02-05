@@ -5,6 +5,7 @@ export async function onRequest(context) {
     const result = await context.env.DB.prepare(sql).all()
     return convertToLineStack(result)
   } catch (error) {
+    console.log('bond', error)
     const errorInfo = `Error Message: ${error.message}\nStack Trace: ${error.stack}`;
     return Response.json({ message: errorInfo });
   }
