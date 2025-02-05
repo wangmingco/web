@@ -40,7 +40,7 @@ export default {
   methods: {
     initChart(val) {
       if(!Array.isArray(val) || val.length === 0) {
-        console.log('CandlestickLarge data error', val)
+        console.log('CandlestickLarge data error', typeof val, val)
         return
       }
       const upColor = '#ec0000';

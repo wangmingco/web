@@ -21,6 +21,9 @@ export async function onRequest(context) {
         if (data === null || data === undefined) {
             return await queryFromDB(env, tableName, year)
         }
+        if(typeof data === "string") {
+            return Response.json(JSON.parse(data))
+        }
         return Response.json(data);
     } catch (error) {
         console.log('requestData error', error)
@@ -38,15 +41,18 @@ export async function onRequest(context) {
 async function queryFromDB(env, tableName, year) {
     switch (tableName) {
         case 'Bitcoin':
-        case 'Forex':
         case 'Gold':
         case 'Stock':
             {
                 const result = await queryKLindData(env, tableName, year)
                 return Response.json(result.data);
             }
-        case 'Bond':
-            {
+            
+        case 'Forex': {
+                const result = await queryKLindData(env, 'ForexCny', year)
+                return Response.json(result.data);
+            }
+        case 'Bond': {
                 const result = await queryBondData(env, tableName, year)
                 return Response.json(result.data);
             }
