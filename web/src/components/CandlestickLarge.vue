@@ -21,13 +21,26 @@ export default {
   },
   watch: {
     data(val) {
-      this.initChart(val);
+      console.log('CandlestickLarge', val)
+      if (val == null) {
+        const data = this.generateOHLC(2e5)
+        this.initChart(data);
+      } else {
+        this.initChart(val);
+      }
     }
+  },
+  data() {
+    return {
+      myChart: {}
+    }
+  },
+  mounted() {
+    this.myChart = echarts.init(this.$refs.chart);
+    window.addEventListener('resize', this.myChart.resize);
   },
   methods: {
     initChart(val) {
-      const myChart = echarts.init(this.$refs.chart);
-
       const upColor = '#ec0000';
       const upBorderColor = '#8A0000';
       const downColor = '#00da3c';
@@ -169,11 +182,61 @@ export default {
       };
 
       if (option && typeof option === 'object') {
-        myChart.setOption(option);
+        this.myChart.setOption(option);
       }
-
-      window.addEventListener('resize', myChart.resize);
+    },
+    generateOHLC(count) {
+      let data = [];
+      let xValue = +new Date(2011, 0, 1);
+      let minute = 60 * 1000;
+      let baseValue = Math.random() * 12000;
+      let boxVals = new Array(4);
+      let dayRange = 12;
+      for (let i = 0; i < count; i++) {
+        baseValue = baseValue + Math.random() * 20 - 10;
+        for (let j = 0; j < 4; j++) {
+          boxVals[j] = (Math.random() - 0.5) * dayRange + baseValue;
+        }
+        boxVals.sort();
+        let openIdx = Math.round(Math.random() * 3);
+        let closeIdx = Math.round(Math.random() * 2);
+        if (closeIdx === openIdx) {
+          closeIdx++;
+        }
+        let volumn = boxVals[3] * (1000 + Math.random() * 500);
+        // ['open', 'close', 'lowest', 'highest', 'volumn']
+        // [1, 4, 3, 2]
+        data[i] = [
+          echarts.format.formatTime('yyyy-MM-dd\nhh:mm:ss', (xValue += minute)),
+          +boxVals[openIdx].toFixed(2),
+          +boxVals[3].toFixed(2),
+          +boxVals[0].toFixed(2),
+          +boxVals[closeIdx].toFixed(2),
+          +volumn.toFixed(0),
+          getSign(data, i, +boxVals[openIdx], +boxVals[closeIdx], 4) // sign
+        ];
+      }
+      return data;
+      function getSign(data, dataIndex, openVal, closeVal, closeDimIdx) {
+        var sign;
+        if (openVal > closeVal) {
+          sign = -1;
+        } else if (openVal < closeVal) {
+          sign = 1;
+        } else {
+          sign =
+            dataIndex > 0
+              ? // If close === open, compare with close of last record
+              data[dataIndex - 1][closeDimIdx] <= closeVal
+                ? 1
+                : -1
+              : // No record of previous, set to be positive
+              1;
+        }
+        return sign;
+      }
     }
+
 
   }
 };

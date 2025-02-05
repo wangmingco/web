@@ -24,9 +24,18 @@ export default {
       this.initChart(val);
     }
   },
+  data() {
+    return {
+      myChart: {}
+    }
+  },
+  mounted() {
+    this.myChart = echarts.init(this.$refs.chart);
+    window.addEventListener('resize', this.myChart.resize);
+  },
   methods: {
     initChart(val) {
-      const myChart = echarts.init(this.$refs.chart);
+      
       const title = this.title + " " + val.dateArray[val.dateArray.length - 1]
       var option = {
         title: {
@@ -61,10 +70,9 @@ export default {
       };
 
       if (option && typeof option === 'object') {
-        myChart.setOption(option);
+        this.myChart.setOption(option);
       }
 
-      window.addEventListener('resize', myChart.resize);
     }
 
   }

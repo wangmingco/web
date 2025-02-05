@@ -2,9 +2,9 @@
   <div id="app">
     <div class="titleContainer">
       <div class="conditionContainer">
-        <el-radio v-model="radio" label="1">一年</el-radio>
-        <el-radio v-model="radio" label="5">五年</el-radio>
-        <el-radio v-model="radio" label="10">十年</el-radio>
+        <el-radio v-model="year" label="1">一年</el-radio>
+        <el-radio v-model="year" label="5">五年</el-radio>
+        <el-radio v-model="year" label="10">十年</el-radio>
       </div>
       <div>
         <el-button type="info" plain @click="clearItems" size="mini">清除缓存</el-button>
@@ -59,12 +59,18 @@ export default {
   },
   data() {
     return {
-      radio: 5,
+      year: '5',
       bondData: [],
       stockData: [],
       goldData: [],
       forexData: [],
       bitcoinData: []
+    }
+  },
+  watch: {
+    year(val) {
+      console.log(val)
+      this.initData()
     }
   },
   mounted() {
@@ -74,13 +80,14 @@ export default {
     initData() {
       const stockData = this.getItem('stockData')
       if (stockData === null || stockData === undefined) {
-        fetch('/stock').then(response => {
+        fetch('/requestData/stock/' + this.year).then(response => {
           return response.json();
         }).then(data => {
           this.stockData = data; // 解析 JSON 数据
           this.setItem('stockData', data)
         }).catch(error => {
           console.error('There was a problem with the fetch /stock operation:', error);
+          this.stockData = null
         });
       } else {
         this.stockData = stockData
@@ -89,13 +96,14 @@ export default {
 
       const goldData = this.getItem('goldData')
       if (goldData === null || goldData === undefined) {
-        fetch('/gold').then(response => {
+        fetch('/requestData/gold/' + this.year).then(response => {
           return response.json();
         }).then(data => {
           this.goldData = data; // 解析 JSON 数据
           this.setItem('goldData', data)
         }).catch(error => {
           console.error('There was a problem with the fetch /gold operation:', error);
+          this.goldData = null
         });
       } else {
         this.goldData = goldData
@@ -104,13 +112,14 @@ export default {
 
       const bitcoinData = this.getItem('bitcoinData')
       if (bitcoinData === null || bitcoinData === undefined) {
-        fetch('/bitcoin').then(response => {
+        fetch('/requestData/bitcoin/' + this.year).then(response => {
           return response.json();
         }).then(data => {
           this.bitcoinData = data; // 解析 JSON 数据
           this.setItem('bitcoinData', data)
         }).catch(error => {
           console.error('There was a problem with the fetch /bitcoin operation:', error);
+          this.bitcoinData = null
         });
       } else {
         this.bitcoinData = bitcoinData
@@ -119,13 +128,14 @@ export default {
 
       const forexData = this.getItem('forexData')
       if (forexData === null || forexData === undefined) {
-        fetch('/forex').then(response => {
+        fetch('/requestData/forex/' + this.year).then(response => {
           return response.json();
         }).then(data => {
           this.forexData = data; // 解析 JSON 数据
           this.setItem('forexData', data)
         }).catch(error => {
           console.error('There was a problem with the fetch /forex operation:', error);
+          this.forexData = null
         });
       } else {
         this.forexData = forexData
@@ -134,13 +144,14 @@ export default {
 
       const bondData = this.getItem('bondData')
       if (bondData === null || bondData === undefined) {
-        fetch('/bond').then(response => {
+        fetch('/requestData/bond/' + this.year).then(response => {
           return response.json();
         }).then(data => {
           this.bondData = data; // 解析 JSON 数据
           this.setItem('bondData', data)
         }).catch(error => {
           console.error('There was a problem with the fetch /bond operation:', error);
+          this.bondData = null
         });
       } else {
         this.bondData = bondData
