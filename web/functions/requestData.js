@@ -4,10 +4,10 @@ export async function onRequest(context) {
     try {
         const req = await context.request.json();
         const name = req.type;
-        const year = req.year;
+        const year = parseInt(req.year);
 
         if (year !== 1 || year !== 5 || year !== 10) {
-            return Response.json({ error: context.functionPath });
+            return Response.json({context});
         }
 
         const tableName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
