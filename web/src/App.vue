@@ -7,7 +7,7 @@
         <el-radio v-model="year" label="10">十年</el-radio>
       </div>
       <div>
-        <el-button type="info" plain @click="clearItems" size="mini">清除缓存</el-button>
+        <el-button type="info" plain @click="clearItems" size="mini" style="opacity: 0; border: 1px solid transparent;background-color: transparent;cursor: pointer;">清除缓存</el-button>
       </div>
     </div>
 
@@ -136,24 +136,8 @@ export default {
       }
     },
     clearItems() {
-      localStorage.removeItem('stockData-1');
-      localStorage.removeItem('goldData-1');
-      localStorage.removeItem('bitcoinData-1');
-      localStorage.removeItem('forexData-1');
-      localStorage.removeItem('bondData-1');
-
-      localStorage.removeItem('stockData-5');
-      localStorage.removeItem('goldData-5');
-      localStorage.removeItem('bitcoinData-5');
-      localStorage.removeItem('forexData-5');
-      localStorage.removeItem('bondData-5');
-
-
-      localStorage.removeItem('stockData-10');
-      localStorage.removeItem('goldData-10');
-      localStorage.removeItem('bitcoinData-10');
-      localStorage.removeItem('forexData-10');
-      localStorage.removeItem('bondData-10');
+      localStorage.clear()
+      console.log('localStorage clear')
     },
     setItem(key, value) {
       const now = new Date().getTime(); // 当前时间戳
