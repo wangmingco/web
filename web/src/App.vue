@@ -92,10 +92,6 @@ export default {
     },
 
     requestData(type) {
-      const req = {
-        type: type,
-        year: this.year
-      }
       const item = this.getItem(type + '-' + this.year)
       if (item === null || item === undefined) {
         fetch('/requestData/'+ type + '/' + this.year).then(response => {
