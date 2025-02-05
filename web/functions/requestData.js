@@ -1,13 +1,15 @@
 import queryKLindData from "./kline";
 export async function onRequest(context) {
 
-    const parts = context.functionPath.split('/').filter(Boolean);
-    const name = parts[0]
-    const year = parseInt(parts[1])
-    if (year !== 1 || year !== 5 || year !== 10) {
-        return Response.json({ error: context.functionPath });
-    }
     try {
+        const req = await context.request.json();
+        const name = req.type;
+        const year = req.year;
+
+        if (year !== 1 || year !== 5 || year !== 10) {
+            return Response.json({ error: context.functionPath });
+        }
+
         const tableName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
         const data = await env.FinanceCache.get(tableName + '-' + year)
         if (data === null || data === undefined) {
@@ -15,13 +17,13 @@ export async function onRequest(context) {
         }
         return Response.json(data);
     } catch (error) {
-
+        return Response.json(context);
     }
 }
 
 async function queryFromDB(env, tableName, year) {
     switch (tableName) {
-        case 'Bitconin':
+        case 'Bitcoin':
         case 'Forex':
         case 'Gold':
         case 'Stock':
