@@ -78,26 +78,18 @@ export default {
         series: dataArray
       };
 
-      // 计算最大值和最小值
-      // 提取所有银行的数据
-      const allData = dataArray.m3
-        .concat(dataArray.m5)
-        .concat(dataArray.y1)
-        .concat(dataArray.y2)
-        .concat(dataArray.y3)
-        .concat(dataArray.y5)
-        ;
-
-      // 提取所有数据点
-      const allDataPoints = allData.map(item => item.data[0]);
-
       // 找到最大值和最小值
-      const maxY = Math.max(...allDataPoints);
-      const minY = Math.min(...allDataPoints);
+      let allData = [];
+      dataArray.forEach(bank => {
+        allData = allData.concat(bank.data);
+      });
+
+      const maxY = Math.max(...allData);
+      const minY = Math.min(...allData);
 
       // 设置 y 轴范围
       option.yAxis.min = this.decreaseAndFloor(minY);
-      option.yAxis.max = maxY;
+      option.yAxis.max = Math.ceil(maxY + 0.375);
 
       if (option && typeof option === 'object') {
         this.myChart.setOption(option);
