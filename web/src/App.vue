@@ -90,6 +90,10 @@ export default {
       console.log(val)
       this.initData()
     },
+    depositYear(val) {
+      console.log(val)
+      this.requestData('deposit')
+    }
   },
   created() {
     const item = this.getItem('mockData')
