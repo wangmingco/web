@@ -79,14 +79,14 @@ export default {
         yAxis: {
           type: 'value',
           // 自定义 y 轴的最小值和最大值
-          min: minY, // 设置最小值
-          max: maxY, // 设置最大值
-          interval: 0.2,
-          splitLine: {
-            lineStyle: {
-              type: 'solid' // solid: 实线, dotted: 点线, dashed: 虚线
-            }
-          }
+          // min: minY, // 设置最小值
+          // max: maxY, // 设置最大值
+          // interval: 0.2,
+          // splitLine: {
+          //   lineStyle: {
+          //     type: 'solid' // solid: 实线, dotted: 点线, dashed: 虚线
+          //   }
+          // }
         },
         series: dataArray
       };
