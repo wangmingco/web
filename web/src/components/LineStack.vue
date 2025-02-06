@@ -35,8 +35,9 @@ export default {
   },
   methods: {
     initChart(val) {
-
-      const title = this.title + " " + val.dateArray[val.dateArray.length - 1]
+      const dataArray = val.dataArray
+      const dateArray = val.dateArray
+      const title = this.title + " " + dateArray[dateArray.length - 1]
       var option = {
         title: {
           text: title
@@ -74,17 +75,17 @@ export default {
             }
           }
         },
-        series: val.dataArray
+        series: dataArray
       };
 
       // 计算最大值和最小值
       // 提取所有银行的数据
-      const allData = data.dataArray.m3
-        .concat(data.dataArray.m5)
-        .concat(data.dataArray.y1)
-        .concat(data.dataArray.y2)
-        .concat(data.dataArray.y3)
-        .concat(data.dataArray.y5)
+      const allData = dataArray.m3
+        .concat(dataArray.m5)
+        .concat(dataArray.y1)
+        .concat(dataArray.y2)
+        .concat(dataArray.y3)
+        .concat(dataArray.y5)
         ;
 
       // 提取所有数据点
