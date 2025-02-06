@@ -47,7 +47,8 @@ export default {
 
       const maxY = Math.ceil(Math.max(...allData) + 0.375);
       const minY = this.decreaseAndFloor(Math.min(...allData));
-
+      console.log('max and min: ', maxY, minY)
+      
       // 设置 y 轴范围
 
       var option = {
