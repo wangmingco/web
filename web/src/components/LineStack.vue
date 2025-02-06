@@ -38,6 +38,18 @@ export default {
       const dataArray = val.dataArray
       const dateArray = val.dateArray
       const title = this.title + " " + dateArray[dateArray.length - 1]
+
+      // 找到最大值和最小值
+      let allData = [];
+      dataArray.forEach(bank => {
+        allData = allData.concat(bank.data);
+      });
+
+      const maxY = Math.ceil(Math.max(...allData) + 0.375);
+      const minY = this.decreaseAndFloor(Math.min(...allData));
+
+      // 设置 y 轴范围
+
       var option = {
         title: {
           text: title
@@ -67,8 +79,9 @@ export default {
         yAxis: {
           type: 'value',
           // 自定义 y 轴的最小值和最大值
-          min: 0, // 设置最小值
-          max: 5, // 设置最大值
+          min: minY, // 设置最小值
+          max: maxY, // 设置最大值
+          interval: 0.2,
           splitLine: {
             lineStyle: {
               type: 'solid' // solid: 实线, dotted: 点线, dashed: 虚线
@@ -77,19 +90,6 @@ export default {
         },
         series: dataArray
       };
-
-      // 找到最大值和最小值
-      let allData = [];
-      dataArray.forEach(bank => {
-        allData = allData.concat(bank.data);
-      });
-
-      const maxY = Math.max(...allData);
-      const minY = Math.min(...allData);
-
-      // 设置 y 轴范围
-      option.yAxis.min = this.decreaseAndFloor(minY);
-      option.yAxis.max = Math.ceil(maxY + 0.375);
 
       if (option && typeof option === 'object') {
         this.myChart.setOption(option);
