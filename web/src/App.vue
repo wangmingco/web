@@ -40,6 +40,19 @@
         <LineStack title="国债利率" :data="bondData" />
       </div>
 
+      <div style="margin-bottom: 10px;">
+        <div class="conditionContainer">
+          <el-radio v-model="depositYear" label="m3">3个月</el-radio>
+          <el-radio v-model="depositYear" label="m5">5个月</el-radio>
+          <el-radio v-model="depositYear" label="y1">1年</el-radio>
+          <el-radio v-model="depositYear" label="y2">2年</el-radio>
+          <el-radio v-model="depositYear" label="y3">3年</el-radio>
+          <el-radio v-model="depositYear" label="y5">5年</el-radio>
+        </div>
+        <!-- 存款利率 -->
+        <LineStack title="银行个人存款利率" :data="depositData" />
+      </div>
+
     </div>
 
 
@@ -63,7 +76,9 @@ export default {
     return {
       mockData: [],
       year: '5',
+      depositYear: 'm5',
       bondData: [],
+      depositData: [],
       stockData: [],
       goldData: [],
       forexData: [],
@@ -77,24 +92,31 @@ export default {
     },
   },
   created() {
-    this.mockData = this.generateOHLC(3560)
+    const item = this.getItem('mockData')
+    if(item == null || item == undefined) {
+      this.mockData = this.generateOHLC(3560)
+      this.setItem('mockData', item)
+    } else {
+      this.mockData = item
+    }
   },
   mounted() {
     this.initData()
   },
   methods: {
     initData() {
-      this.requestData('stock')
-      this.requestData('gold')
       this.requestData('bitcoin')
-      this.requestData('forex')
       this.requestData('bond')
+      this.requestData('deposit')
+      this.requestData('forex')
+      this.requestData('gold')
+      this.requestData('stock')
     },
 
     requestData(type) {
       const item = this.getItem(type + '-' + this.year)
       if (item === null || item === undefined) {
-        fetch('/requestData/'+ type + '/' + this.year).then(response => {
+        fetch('/requestData/' + type + '/' + this.year).then(response => {
           if (!response.ok) {
             this.setData(type, this.mockData)
             return null
@@ -115,8 +137,19 @@ export default {
     },
     setData(type, data) {
       switch (type) {
+        case 'bond': {
+          this.bondData = data
+          break
+        }
         case 'bitcoin': {
           this.bitcoinData = data
+          break
+        }
+        case 'deposit': {
+          this.depositData = {
+            dataArray: data.dataArray[this.depositYear],
+            dateArray: data.dateArray
+          }
           break
         }
         case 'forex': {
@@ -129,10 +162,6 @@ export default {
         }
         case 'stock': {
           this.stockData = data
-          break
-        }
-        case 'bond': {
-          this.bondData = data
           break
         }
       }
